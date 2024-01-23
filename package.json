@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node server.ts",
-    "dev": "nodemon server.ts"
+    "build": "npx tsc",
+    "start": "node dist/server.js",
+    "dev": "nodemon --quiet --exec ts-node src/server.ts"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
@@ -23,6 +24,7 @@
     "@types/morgan": "^1.9.4",
     "@types/cookie-parser": "^1.4.3",
     "eslint": "^8.56.0",
-    "eslint-config-airbnb-base": "^15.0.0"
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5"
   }
 }

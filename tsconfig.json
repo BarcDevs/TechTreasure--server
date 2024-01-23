@@ -1,9 +1,12 @@
 {
+  "include": [
+    "./src/**/*"
+  ],
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "rootDir": "./",
-    "outDir": "./build",
+    "rootDir": "./src",
+    "outDir": "./dist",
     "esModuleInterop": true,
     "strict": true
   }

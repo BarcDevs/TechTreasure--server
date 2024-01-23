@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import bodyParser from 'body-parser'
 
-import indexRouter from './routes/index'
+import indexRouter from './routes'
 
 const app = express()
 
