@@ -1,12 +1,24 @@
 {
-  "extends": "airbnb-base",
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint/eslint-plugin"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2023,
+    "sourceType": "module"
+  },
   "env": {
     "es6": true,
     "browser": true
   },
   "rules": {
     "brace-style": [
-      "error",
+      "off",
       "stroustrup"
     ],
     "comma-dangle": [
@@ -17,7 +29,7 @@
       "warn"
     ],
     "no-var": [
-      "off"
+      "error"
     ],
     "one-var": [
       "off"
