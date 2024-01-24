@@ -55,6 +55,13 @@ userModel.virtual('orders', {
   foreignField: 'user'
 })
 
+userModel.pre('save', async function (next) {
+  if (!this.isModified('password')) return next()
+  const salt = await bcrypt.genSalt(10)
+  this.password = await bcrypt.hash(this.password, salt)
+  this.passwordLastChangedAt = Date.now() as unknown as Date
+  next()
+})
 
 const User = model<IUser>('User', userModel)
 export default User
