@@ -1,6 +1,6 @@
 class AppError extends Error {
-  private readonly statusCode: number
-  private readonly status: 'failed' | 'error'
+  readonly statusCode: number
+  readonly status: 'failed' | 'error'
   private readonly isOperational: boolean
 
   constructor(statusCode: number, message: string) {
