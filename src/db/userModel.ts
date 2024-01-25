@@ -3,6 +3,7 @@ import { model, Schema } from 'mongoose'
 import bcrypt from 'bcrypt'
 
 type IUser = {
+  _id: Schema.Types.ObjectId
   password: string
   passwordLastChangedAt?: Date
 } & User

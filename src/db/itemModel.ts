@@ -1,7 +1,18 @@
-import { model, Schema } from 'mongoose'
-import { Product } from '../types'
+import { model, PopulatedDoc, Schema } from 'mongoose'
+import { Category, Color, Product } from '../types'
 
-const itemModel = new Schema<Product>({
+interface IProduct extends Omit<Product, 'category'> {
+  _id: Schema.Types.ObjectId
+  category: PopulatedDoc<Category>
+  defaultColor: string
+}
+
+const colorModel = new Schema<Color>({
+  hex: String,
+  name: String
+})
+
+const itemModel = new Schema<IProduct>({
   name: {
     type: String,
     required: [true, 'Name is required']
@@ -17,15 +28,16 @@ const itemModel = new Schema<Product>({
   },
   mainImage: {
     type: String || Schema.Types.Mixed,
-    required: [true, 'Main image is required'] },
+    required: [true, 'Main image is required']
+  },
   images: {
-    type: [String],
-    default: []
-  } || {
-    type: [Schema.Types.Mixed],
+    type: [String] || [Schema.Types.Mixed],
     default: []
   },
-  category: String,
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: 'Category'
+  },
   stock: {
     type: Number,
     default: 0
@@ -42,12 +54,8 @@ const itemModel = new Schema<Product>({
   sizes: [String],
   isNew: Boolean,
   defaultColor: String,
-  colors: [
-    {
-      name: String,
-      hex: String
-    }
-  ],
+  // @ts-ignore
+  colors: [colorModel],
   sale: Number,
   saleEndsAt: Date,
   oldPrice: Number
@@ -58,5 +66,11 @@ itemModel.index({ category: 'text'})
 itemModel.index({ rating: -1})
 itemModel.index({ price: -1})
 
-const Item = model<Product>('Item', itemModel)
+itemModel.pre(/^find/, function (next) {
+  // @ts-ignore
+  this.populate({ path: 'category', select: 'name' })
+  next()
+})
+
+const Item = model<IProduct>('Item', itemModel)
 export default Item
