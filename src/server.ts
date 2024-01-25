@@ -7,10 +7,11 @@
 import app from './app'
 import http from 'http'
 import dotenv from 'dotenv'
-
+import debug from 'debug'
+import db from './db'
 dotenv.config()
 
-const debug = require('debug')('server:server')
+debug('ts-express:server')
 
 /**
  * Get port from environment and store in Express.
@@ -18,6 +19,7 @@ const debug = require('debug')('server:server')
 
 const port = normalizePort(process.env.PORT || '3000')
 app.set('port', port)
+db
 
 /**
  * Create HTTP server.
