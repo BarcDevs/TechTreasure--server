@@ -3,9 +3,10 @@
     "./src/**/*"
   ],
   "compilerOptions": {
-    "target": "ES2023",
+    "target": "ES2022",
     "lib": ["ES2021.String"],
     "module": "commonjs",
+    "moduleResolution": "Node" ,
     "rootDir": "./src",
     "outDir": "./dist",
     "esModuleInterop": true,
