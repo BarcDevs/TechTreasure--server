@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response, NextFunction, ErrorRequestHandler } from 'express'
 import AppError from '../utils/AppError'
 import { errorResponse } from '../utils/responseFactory'
 
@@ -12,10 +12,10 @@ export const catchAsync = (fn: Function) => async (req: Request, res: Response, 
 }
 
 export const notFound = (req: Request, res: Response, next: NextFunction) => {
-  next(new AppError(404, `Unable to find ${req.originalUrl}`))
+  return next(new AppError(404, `Unable to find ${req.originalUrl}`))
 }
 
-export const errorHandler = (err: Error, req: Request, res: Response) => {
+export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof AppError) {
     return errorResponse(res, err, err.statusCode, err.status)
   }
