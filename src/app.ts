@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import bodyParser from 'body-parser'
 
-import indexRouter from './routes'
+import { storeRouter } from './routes'
 
 const app = express()
 
@@ -15,6 +15,6 @@ app.use(cookieParser())
 app.use(bodyParser)
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', indexRouter)
+app.use('/api/items', storeRouter)
 
 export default app
