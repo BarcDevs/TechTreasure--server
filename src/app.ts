@@ -5,6 +5,7 @@ import logger from 'morgan'
 import bodyParser from 'body-parser'
 
 import { storeRouter } from './routes'
+import { notFound } from './controllers/errorController'
 
 const app = express()
 
@@ -17,4 +18,5 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api/items', storeRouter)
 
+app.use('*', notFound)
 export default app
