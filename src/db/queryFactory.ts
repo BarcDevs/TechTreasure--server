@@ -1,30 +1,26 @@
 import { Model, PopulateOptions, Query } from 'mongoose'
 import { ParsedUrlQuery } from 'node:querystring'
 import AppError from '../utils/AppError'
-import { queryFields, UrlQuery } from '../types'
+import {  UrlQuery } from '../types'
 
 const paginate = (query: Query<any, any>, urlQuery: ParsedUrlQuery, docs: number) => {
   const page = Math.max(Number(urlQuery.page) || 1, 1)
   const limit = Math.max(Number(urlQuery.limit) || 20, 1)
   const skip = (page - 1) * limit
 
-  if (skip < docs) throw new AppError(400, 'Page out of bounds')
+  if (skip > docs) throw new AppError(400, 'Page out of bounds')
 
   return query.skip(skip).limit(limit)
 }
 
 const filter = (query: Query<any, any>, urlQuery: ParsedUrlQuery) => {
-  const filters = Object.entries(urlQuery)
-    .filter(([key]) => !(key in queryFields))
-    .map(([key, value]) => ({ [key]: value }))
+  /** query will be passed in as JSON object via url query
+  example: filter={"category":"electronics","price":{"$gte":100,"$lte":500}} */
+  const filterQuery = Array.isArray(urlQuery.filter) ?
+    Object.fromEntries(urlQuery.filter.map(q => JSON.parse(q))) :
+  JSON.parse(urlQuery.filter || '{}')
 
-  return query.find(
-    JSON.parse(
-      JSON.stringify(filters)
-        .replace(
-          /\b(gt|gte|lt|lte)\b/g,
-          match => `$${match}`
-        )))
+  return query.find(filterQuery)
 }
 
 export const queryFactory = async <T>(model: Model<any>, urlQuery: UrlQuery, find: object, populateOptions?: PopulateOptions): Promise<T[]> => {
