@@ -1,4 +1,23 @@
 import { ObjectId } from 'mongoose'
+import { ParsedUrlQuery } from 'node:querystring'
+
+export enum queryFields {
+  page = 'page',
+  limit = 'limit',
+  sort = 'sort',
+  fields = 'fields',
+  filter = 'filter',
+  search = 'search'
+}
+
+export type UrlQuery = ParsedUrlQuery & {
+  page: string
+  limit: string
+  sort: string
+  fields: string
+  filter: string
+  search: string
+}
 
 export type BasicProduct = {
   id: ObjectId

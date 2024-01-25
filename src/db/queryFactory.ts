@@ -27,18 +27,20 @@ const filter = (query: Query<any, any>, urlQuery: ParsedUrlQuery) => {
         )))
 }
 
-export const queryFactory = async <T>(model: Model<T>, urlQuery: UrlQuery, find: Query<T, T>, populateOptions: PopulateOptions) => {
+export const queryFactory = async <T>(model: Model<any>, urlQuery: UrlQuery, find: object, populateOptions?: PopulateOptions): Promise<T[]> => {
   const query = model.find(find)
 
   paginate(
     filter(query, urlQuery)
       .sort(
         urlQuery.sort?.replaceAll(',', ' '))
-      .select(urlQuery.fields?.replaceAll(',', ' ') || '-__v')
-      .populate(populateOptions),
+      .select(urlQuery.fields?.replaceAll(',', ' ') || '-__v'),
     urlQuery,
     await model.countDocuments()
   )
 
+  if (populateOptions) {
+    query.populate(populateOptions)
+  }
   return query
 }
