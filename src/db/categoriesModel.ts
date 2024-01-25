@@ -9,11 +9,16 @@ const categoriesModel = new Schema<Category>({
   icon: {
     type: String,
     required: [true, 'Icon is required']
-  },
-  items: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Item'
-  }]
+  }
+}, {
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true }
+})
+
+categoriesModel.virtual('items', {
+  ref: 'Items',
+  localField: '_id',
+  foreignField: 'category'
 })
 
 const Categories = model<Category>('Categories', categoriesModel)
