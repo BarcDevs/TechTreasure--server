@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express'
-import AppError from '../src/utils/AppError'
-import { errorResponse } from '../src/utils/responseFactory'
+import AppError from '../utils/AppError'
+import { errorResponse } from '../utils/responseFactory'
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const catchAsync = (fn: Function) => async (req: Request, res: Response, next: NextFunction) => {
   try {
     return await fn(req, res, next)
-  } catch (error) {
+  } catch (error: Error | any) {
     next(new AppError(400, error.message))
   }
 }
