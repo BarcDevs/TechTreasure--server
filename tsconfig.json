@@ -3,7 +3,8 @@
     "./src/**/*"
   ],
   "compilerOptions": {
-    "target": "es6",
+    "target": "ES2023",
+    "lib": ["ES2021.String"],
     "module": "commonjs",
     "rootDir": "./src",
     "outDir": "./dist",
