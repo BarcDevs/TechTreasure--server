@@ -1,12 +1,11 @@
 import express from 'express'
 import {
+  createItem,
+  deleteItem,
+  getItem,
   getItems,
   getItemsByCategory,
-  getCategories,
-  createItem,
-  updateItem,
-  deleteItem,
-  getItem
+  updateItem
 } from '../controllers/storeControllers'
 
 const router = express.Router()
@@ -14,8 +13,7 @@ const router = express.Router()
 router.get('/', getItems)
 router.get('/:id', getItem)
 
-router.get('/categories', getCategories)
-router.get('/categories/:id', getItemsByCategory)
+router.get('/category/:id', getItemsByCategory)
 
 /* protected routes */
 // router.use(protect)

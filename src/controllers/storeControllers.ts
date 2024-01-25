@@ -5,7 +5,6 @@ import { catchAsync } from './errorController'
 import { successResponse } from '../utils/responseFactory'
 import { UrlQuery } from '../types'
 import AppError from '../utils/AppError'
-import Categories from '../db/categoriesModel'
 
 export const getItems = catchAsync(async (req: Request<any, any, UrlQuery>, res: Response, next: NextFunction) => {
   const query = queryFactory<typeof Item>(Item, req.query as UrlQuery, req.body)
@@ -13,27 +12,13 @@ export const getItems = catchAsync(async (req: Request<any, any, UrlQuery>, res:
 
   if (!items) return next(new AppError(404, 'Items not found'))
 
-  successResponse(res, items)
+  return successResponse(res, items)
 })
 
 export const getItem = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const item = await Item.findById(req.params.id)
   if (!item) return next(new AppError(404, 'Item not found'))
   successResponse(res, item)
-})
-
-export const getCategories = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const query = queryFactory<typeof Categories>(Categories, req.query as UrlQuery, req.body)
-  const categories = await query
-
-  if (!categories) return next(new AppError(404, 'Categories not found'))
-  successResponse(res, categories)
-})
-
-export const getCategory = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const category = await Categories.findById(req.params.id)
-  if (!category) return next(new AppError(404, 'Category not found'))
-  successResponse(res, category)
 })
 
 export const getItemsByCategory = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
