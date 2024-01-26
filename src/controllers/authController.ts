@@ -4,7 +4,7 @@ import { catchAsync } from './errorController'
 import User from '../db/userModel'
 import AppError from '../utils/AppError'
 import { successResponse } from '../utils/responseFactory'
-import { AuthenticatedReq } from '../types'
+import { AuthenticatedReq, Role } from '../types'
 
 const generateJWT = (id: string) => {
   const secret = process.env.JWT_SECRET
@@ -70,7 +70,7 @@ export const protect = catchAsync(async (req: AuthenticatedReq, res: Response, n
   next()
 })
 
-export const restrict = (roles: string[]) => (req: AuthenticatedReq, res: Response, next: NextFunction) => {
+export const restrict = (roles: Role[]) => (req: AuthenticatedReq, res: Response, next: NextFunction) => {
   if (!req.user)
     return next(new AppError(401, 'You are not logged in! Please log in to get access.'))
   if (!roles.includes(req.user!.role))

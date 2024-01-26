@@ -7,16 +7,17 @@ import {
   getItemsByCategory,
   updateItem
 } from '../controllers/storeControllers'
+import { protect, restrict } from '../controllers/authController'
 
 const router = express.Router()
 
 router.get('/', getItems)
 router.get('/:id', getItem)
 
-router.get('/category/:id', getItemsByCategory)
+router.get('/category/:category', getItemsByCategory)
 
 /* protected routes */
-// router.use(protect)
+router.use('/*', protect, restrict(['seller']))
 router.post('/', createItem)
 router.patch('/:id', updateItem)
 router.delete('/:id', deleteItem)

@@ -11,7 +11,9 @@ export enum queryFields {
   search = 'search'
 }
 
-export type AuthenticatedReq = Request & { user: User }
+export type Role = 'user' | 'seller'
+
+export type AuthenticatedReq = Request & { user?: User }
 
 export type UrlQuery = ParsedUrlQuery & {
   page: string
@@ -75,7 +77,7 @@ export type Order = {
 export type User = {
   name: string
   email: string
-  role: 'user' | 'seller'
+  role: Role
   billingDetails?: BillingDetails[]
   cart?: Cart
   orders?: Order[]
