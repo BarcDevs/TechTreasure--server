@@ -2,11 +2,14 @@ import { User } from '../types'
 import { model, Schema } from 'mongoose'
 import bcrypt from 'bcrypt'
 
-type IUser = {
-  _id: Schema.Types.ObjectId
+interface IUser extends User {
   password: string
   passwordLastChangedAt?: Date
-} & User
+  resetToken?: string
+  resetTokenExpiration?: Date
+
+  comparePasswords(password: string): Promise<boolean>
+}
 
 const userModel = new Schema<IUser>({
   name: {
@@ -38,8 +41,14 @@ const userModel = new Schema<IUser>({
     type: Date,
     default: Date.now
   },
-  resetToken: String,
-  resetTokenExpiration: Date,
+  resetToken: {
+    type: String,
+    select: false
+  },
+  resetTokenExpiration: {
+    type: Date,
+    select: false
+  },
   role: {
     type: String,
     enum: ['user', 'seller'],
@@ -56,15 +65,15 @@ userModel.virtual('orders', {
   foreignField: 'user'
 })
 
-userModel.pre('save', async function (next) {
+userModel.pre('save', async function(next) {
   if (!this.isModified('password')) return next()
-  const salt = await bcrypt.genSalt(10)
+  const salt = await bcrypt.genSalt(Number(process.env.BCRYPT_SALT_ROUNDS) || 10)
   this.password = await bcrypt.hash(this.password, salt)
   this.passwordLastChangedAt = Date.now() as unknown as Date
   next()
 })
 
-userModel.methods.comparePasswords = async function (password: string) {
+userModel.methods.comparePasswords = async function(password: string) {
   return await bcrypt.compare(password, this.password)
 }
 

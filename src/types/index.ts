@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongoose'
 import { ParsedUrlQuery } from 'node:querystring'
+import { Request } from 'express'
 
 export enum queryFields {
   page = 'page',
@@ -9,6 +10,8 @@ export enum queryFields {
   filter = 'filter',
   search = 'search'
 }
+
+export type AuthenticatedReq = Request & { user: User }
 
 export type UrlQuery = ParsedUrlQuery & {
   page: string
