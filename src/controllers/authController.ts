@@ -25,6 +25,7 @@ export const login = catchAsync(async (req: Request, res: Response, next: NextFu
     return next(new AppError(401, 'Incorrect email or password'))
   }
   const token = generateJWT(`${user._id}`)
+  user.password = ''
   successResponse(res, { user }, 200, { token })
 })
 
@@ -33,10 +34,18 @@ export const signup = catchAsync(async (req: Request, res: Response, next: NextF
   if (!name || !email || !password)
     return next(new AppError(400, 'Please provide name, email and password'))
 
-  const user = await User.create({ name, email, password })
+  let user
+  try {
+    user = await User.create({ name, email, password })
+  } catch (e: Error | any) {
+    if (e.code === 11000)
+      return next(new AppError(400, 'Email already exists. You can use login instead.'))
+    throw e
+  }
   const token = generateJWT(`${user._id}`)
 
   // todo send welcome email
+  user.password = ''
   successResponse(res, { user }, 201, { token })
 })
 
