@@ -99,12 +99,6 @@ export type Cart = {
   total: number
 }
 
-export type Category = {
-  id: string
-  name: string
-  icon: string
-  items?: Product[] // populated by mongoose
-}
 
 export type BillingDetails = {
 
