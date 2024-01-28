@@ -92,7 +92,9 @@ export type Seller = {
 export type User = BaseUser | Seller
 
 export type Store = {
-
+  name: string
+  products: Product[]
+  // todo ratings
 }
 
 export type Cart = {
