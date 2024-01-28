@@ -29,7 +29,7 @@ export const queryFactory = async <T>(model: Model<any>, urlQuery: UrlQuery, fin
   paginate(
     filter(query, urlQuery)
       .sort(
-        urlQuery.sort?.replaceAll(',', ' '))
+        JSON.parse(urlQuery.sort))
       .select(urlQuery.fields?.replaceAll(',', ' ') || '-__v'),
     urlQuery,
     await model.countDocuments()
