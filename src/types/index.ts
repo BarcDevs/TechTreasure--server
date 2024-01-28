@@ -1,6 +1,6 @@
-import { ObjectId } from 'mongoose'
 import { ParsedUrlQuery } from 'node:querystring'
 import { Request } from 'express'
+import { ObjectId } from 'mongoose'
 
 export enum queryFields {
   page = 'page',
@@ -25,7 +25,6 @@ export type UrlQuery = ParsedUrlQuery & {
 }
 
 export type BasicProduct = {
-  id: ObjectId
   name: string
   description: string
   mainImage: string
@@ -65,7 +64,6 @@ export type ManagedProduct = Product & {
 }
 
 export type Order = {
-  id: string
   createdAt: Date
   items: CartItem[]
   payment: string
@@ -74,16 +72,27 @@ export type Order = {
   trackingNumber?: string
 }
 
-export type User = {
+export type BaseUser = {
+  role: Role
   name: string
   email: string
-  role: Role
   billingDetails?: BillingDetails[]
   cart?: Cart
   orders?: Order[]
   createdAt: Date
   resetToken?: string
   resetTokenExpiration?: Date
+}
+
+export type Seller = {
+  role: 'seller'
+  store: ObjectId
+} & BaseUser
+
+export type User = BaseUser | Seller
+
+export type Store = {
+
 }
 
 export type Cart = {
@@ -100,6 +109,4 @@ export type Cart = {
 }
 
 
-export type BillingDetails = {
-
-}
+export type BillingDetails = object

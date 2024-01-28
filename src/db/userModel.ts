@@ -1,12 +1,14 @@
-import { User } from '../types'
+import { Role, Seller, User } from '../types'
 import { model, Schema } from 'mongoose'
 import bcrypt from 'bcrypt'
 
-interface IUser extends User {
+interface IUser extends Omit<User, 'role'> {
+  role: Role
   password: string
   passwordLastChangedAt?: Date
   resetToken?: string
   resetTokenExpiration?: Date
+  store?: Schema.Types.ObjectId
 
   comparePasswords(password: string): Promise<boolean>
 }
@@ -53,6 +55,10 @@ const userModel = new Schema<IUser>({
     type: String,
     enum: ['user', 'seller'],
     default: 'user'
+  },
+  store: {
+    type: Schema.Types.ObjectId,
+    ref: 'Store'
   }
 }, {
   toObject: { virtuals: true },
@@ -70,6 +76,13 @@ userModel.pre('save', async function(next) {
   const salt = await bcrypt.genSalt(Number(process.env.BCRYPT_SALT_ROUNDS) || 10)
   this.password = await bcrypt.hash(this.password, salt)
   this.passwordLastChangedAt = Date.now() as unknown as Date
+  next()
+})
+
+userModel.pre('save', function(next) {
+  if (!this.isModified('role')) return next()
+  if (this.role !== 'seller' && this.store)
+    this.store = undefined
   next()
 })
 
