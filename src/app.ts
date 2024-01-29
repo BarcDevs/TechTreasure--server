@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser'
 import logger from 'morgan'
 import 'dotenv/config'
 
-import { authRouter, storeRouter } from './routes'
+import { authRouter, storeRouter, userRouter } from './routes'
 import { errorHandler, notFound } from './controllers/errorController'
 
 const app = express()
@@ -25,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api/products', storeRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/user', userRouter)
 
 app.all('*', notFound)
 // not working

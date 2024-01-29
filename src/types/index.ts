@@ -93,7 +93,7 @@ export type User = BaseUser | Seller
 
 export type Store = {
   name: string
-  products: Product[]
+  products: Product[] | string[]
   // todo ratings
 }
 
