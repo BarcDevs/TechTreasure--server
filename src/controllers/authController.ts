@@ -61,17 +61,14 @@ export const protect = catchAsync(async (req: AuthenticatedReq, res: Response, n
   if (!token)
     return next(new AppError(401, 'You are not logged in! Please log in to get access.'))
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET!)
+  const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload
   if (!decoded) return next(new AppError(401, 'Invalid token. Please log in again.'))
 
-  const user = await User.findById((decoded as JwtPayload).id)
+  const user = await User.findById(decoded.id)
     .select('+passwordLastChangedAt')
 
   if (!user) return next(new AppError(401, 'The user belonging to this token does no longer exist.'))
-  if (!user.passwordLastChangedAt || Number(user.passwordLastChangedAt) < Date.now()) {
-    return next(new AppError(401, 'User recently changed password. Please log in again.'))
-  }
-  if (((decoded as JwtPayload).iat || 0) / 1000 < Number(user.passwordLastChangedAt)) {
+  if (!user.passwordLastChangedAt || Number(user.passwordLastChangedAt) > (decoded.iat ?? 0) * 1000) {
     return next(new AppError(401, 'User recently changed password. Please log in again.'))
   }
 
