@@ -27,8 +27,8 @@ export type UrlQuery = ParsedUrlQuery & {
 export type BasicProduct = {
   name: string
   description: string
-  mainImage: string
-  images?: string[],
+  mainImage: [Image]
+  images?: Image[],
   sizes?: string[]
   rating: number
   votes: number
@@ -42,11 +42,15 @@ export type BasicProduct = {
   stock: number
 }
 
-export type ProductWithColors = Omit<BasicProduct, 'mainImage' | 'images'> & {
-  mainImage: { [key: ProductWithColors['colors'][number]['name']]: string }
-  images?: { [key: ProductWithColors['colors'][number]['name']]: string[] }
+export type ProductWithColors = Omit<BasicProduct, 'mainImage'> & {
+  mainImage: Image[]
   colors: Color[]
   defaultColor: ProductWithColors['colors'][number]['name']
+}
+
+export type Image = {
+  path: string
+  color?: string
 }
 
 export type Product = BasicProduct | ProductWithColors

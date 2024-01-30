@@ -11,6 +11,14 @@ const colorModel = new Schema<Color>({
   name: String
 })
 
+const imageModel = new Schema({
+  path: {
+    type: String,
+    required: [true, 'Image path is required']
+  },
+  color: String
+})
+
 const itemModel = new Schema<IProduct>({
   name: {
     type: String,
@@ -26,11 +34,11 @@ const itemModel = new Schema<IProduct>({
     min: [0, 'Price cannot be negative']
   },
   mainImage: {
-    type: Schema.Types.Mixed,
-    required: [true, 'Main image is required']
+    type: [imageModel],
+    minlength: [1, 'Main image is required']
   },
   images: {
-    type: [Schema.Types.Mixed],
+    type: [imageModel],
     default: []
   },
   category: {
