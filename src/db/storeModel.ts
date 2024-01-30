@@ -5,12 +5,16 @@ const storeModel = new Schema<Store>({
   name: {
     type: String,
     required: [true, 'Name is required']
-  },
-  products: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Item'
-  }]
+  }
+},{
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true }
 })
 
+storeModel.virtual('products', {
+  ref: 'Item',
+  localField: '_id',
+  foreignField: 'store'
+})
 const Store = model<Store>('Store', storeModel)
 export default Store
