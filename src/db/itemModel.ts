@@ -65,7 +65,12 @@ const itemModel = new Schema<IProduct>({
   colors: [colorModel],
   sale: Number,
   saleEndsAt: Date,
-  oldPrice: Number
+  oldPrice: Number,
+  store: {
+    type: Schema.Types.ObjectId,
+    ref: 'Store',
+    required: [true, 'Store is required']
+  }
 }, {
   suppressReservedKeysWarning: true
 })

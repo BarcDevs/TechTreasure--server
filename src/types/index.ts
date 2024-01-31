@@ -40,6 +40,7 @@ export type BasicProduct = {
   category: string
   shippingFee?: number
   stock: number
+  store: ObjectId
 }
 
 export type ProductWithColors = Omit<BasicProduct, 'mainImage'> & {
