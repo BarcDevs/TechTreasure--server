@@ -5,6 +5,7 @@ import { catchAsync } from './errorController'
 import { successResponse } from '../utils/responseFactory'
 import { UrlQuery } from '../types'
 import AppError from '../utils/AppError'
+import { parseFormData } from '../utils/parse'
 
 export const getItems = catchAsync(async (req: Request<any, any, UrlQuery>, res: Response, next: NextFunction) => {
   const query = queryFactory<typeof Item>(Item, req.query as UrlQuery, req.body)
@@ -28,7 +29,10 @@ export const getItemsByCategory = catchAsync(async (req: Request, res: Response,
 })
 
 export const createItem = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const item = await Item.create(req.body)
+  // console.log(req.body )
+  const body = parseFormData(req.body)
+  console.log(body)
+  const item = await Item.create(body)
   successResponse(res, item, 201)
 })
 
