@@ -7,6 +7,9 @@ export const catchAsync = (fn: Function) => async (req: Request, res: Response, 
   try {
     return await fn(req, res, next)
   } catch (error: Error | any) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(error.stack)
+    }
     next(new AppError(400, error.message))
   }
 }
