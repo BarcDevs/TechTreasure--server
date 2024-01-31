@@ -8,6 +8,8 @@ import {
   updateItem
 } from '../controllers/storeControllers'
 import { protect, restrict } from '../controllers/authController'
+import { uploadImage } from '../middlewares/upload'
+import { saveImages } from '../controllers/imageController'
 
 const router = express.Router()
 
@@ -18,7 +20,7 @@ router.get('/category/:category', getItemsByCategory)
 
 /* protected routes */
 router.use('/*', protect, restrict(['seller']))
-router.post('/', createItem)
+router.post('/', uploadImage.any(), saveImages, createItem)
 router.patch('/:id', updateItem)
 router.delete('/:id', deleteItem)
 
