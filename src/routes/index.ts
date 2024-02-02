@@ -1,9 +1,5 @@
-import express from 'express'
-const router = express.Router()
+import storeRouter from './storeRouter'
+import authRouter from './authRouter'
+import userRouter from './userRouter'
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-    res.json({})
-})
-
-export default router
+export { storeRouter, authRouter, userRouter }

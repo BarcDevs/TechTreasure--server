@@ -1,6 +1,11 @@
 {
   "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint/eslint-plugin"
+  ],
   "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
   ],
   "parserOptions": {
@@ -28,6 +33,8 @@
     ],
     "one-var": [
       "off"
-    ]
+    ],
+    "@typescript-eslint/no-explicit-any": ["off"],
+    "@typescript-eslint/ban-ts-comment": ["off"]
   }
 }
