@@ -9,10 +9,10 @@ import { authRouter, storeRouter, userRouter } from './routes'
 import { errorHandler, notFound } from './controllers/errorController'
 
 const app = express()
-
+console.log(process.env.CLIENT_URL)
 /* cors */
 app.use(cors({
-  // origin: process.env.CLIENT_URL,
+  origin: process.env.CLIENT_URL,
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'X-Auth-Token', 'X-Request-With']
 }))
