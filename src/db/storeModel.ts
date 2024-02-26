@@ -16,5 +16,15 @@ storeModel.virtual('products', {
   localField: '_id',
   foreignField: 'store'
 })
+storeModel.virtual('orders', {
+  ref: 'Order',
+  localField: '_id',
+  foreignField: 'store'
+})
+storeModel.virtual('owner', {
+  ref: 'User',
+  localField: '_id',
+  foreignField: 'store'
+})
 const Store = model<Store>('Store', storeModel)
 export default Store
