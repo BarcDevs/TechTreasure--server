@@ -6,13 +6,13 @@ import AppError from '../utils/AppError'
 import { successResponse } from '../services/responseFactory'
 import { AuthenticatedReq, Role } from '../types'
 import { findUserById, findUserWithPassword } from '../services/userServices'
+import vars from '../config/vars'
 
 const generateJWT = (id: string) => {
-  const secret = process.env.JWT_SECRET
-  if (!secret) throw new AppError(400, 'JWT secret is not defined')
+  if (!vars.jwtSecret) throw new AppError(400, 'JWT secret is not defined')
 
-  return jwt.sign({ id }, secret, {
-    expiresIn: process.env.JWT_EXPIRES_IN || '1d'
+  return jwt.sign({ id }, vars.jwtSecret, {
+    expiresIn: vars.jwtExpiresIn || '1d'
   })
 }
 
@@ -59,7 +59,7 @@ export const protect = catchAsync(async (req: AuthenticatedReq, res: Response, n
   if (!token)
     return next(new AppError(401, 'You are not logged in! Please log in to get access.'))
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload
+  const decoded = jwt.verify(token, vars.jwtSecret) as JwtPayload
   if (!decoded) return next(new AppError(401, 'Invalid token. Please log in again.'))
 
   const user = await findUserById(decoded.id, '+passwordLastChangedAt')

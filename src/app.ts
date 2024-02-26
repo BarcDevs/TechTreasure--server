@@ -7,12 +7,12 @@ import 'dotenv/config'
 
 import { authRouter, storeRouter, userRouter } from './routes'
 import { errorHandler, notFound } from './controllers/errorController'
+import config from 'config'
 
 const app = express()
-console.log(process.env.CLIENT_URL)
 /* cors */
 app.use(cors({
-  origin: process.env.CLIENT_URL,
+  origin: config.get('clientUrl'),
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'X-Auth-Token', 'X-Request-With']
 }))

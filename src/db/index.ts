@@ -1,9 +1,10 @@
 import { connect } from 'mongoose'
 import dotenv from 'dotenv'
+import vars from '../config/vars'
 dotenv.config()
 
-const db = connect(process.env.MONGO_URI as string, {
-  dbName: process.env.MONGO_DB_NAME
+const db = connect(vars.mongoUri!, {
+  dbName: vars.mongoDbName
 }).then(() => {
   console.log('MongoDB connected')
 }).catch(err => console.log(err))

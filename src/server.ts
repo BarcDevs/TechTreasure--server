@@ -9,15 +9,16 @@ import http from 'http'
 import dotenv from 'dotenv'
 import debug from 'debug'
 import db from './db'
+import config from 'config'
 dotenv.config()
 
+const PORT = config.get('port')
 debug('ts-express:server')
 
 /**
  * Get port from environment and store in Express.
  */
-
-const port = normalizePort(process.env.PORT || '3000')
+const port = normalizePort(PORT as string)
 app.set('port', port)
 db
 

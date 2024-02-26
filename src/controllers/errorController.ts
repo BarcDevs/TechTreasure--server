@@ -1,13 +1,14 @@
 import { Request, Response, NextFunction, ErrorRequestHandler } from 'express'
 import AppError from '../utils/AppError'
 import { errorResponse } from '../services/responseFactory'
+import vars from '../config/vars'
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const catchAsync = (fn: Function) => async (req: Request, res: Response, next: NextFunction) => {
   try {
     return await fn(req, res, next)
   } catch (error: Error | any) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (vars.env !== 'production') {
       console.log(error.stack)
     }
     next(new AppError(400, error.message))
