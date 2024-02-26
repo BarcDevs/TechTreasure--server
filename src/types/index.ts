@@ -16,12 +16,12 @@ export type Role = 'user' | 'seller'
 export type AuthenticatedReq = Request & { user?: User }
 
 export type UrlQuery = ParsedUrlQuery & {
-  page: string
-  limit: string
-  sort: string
-  fields: string
-  filter: string
-  search: string
+  page?: string
+  limit?: string
+  sort?: string
+  fields?: string
+  filter?: string
+  search?: string
 }
 
 export type BasicProduct = {

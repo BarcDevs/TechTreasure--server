@@ -3,8 +3,9 @@ import jwt, { JwtPayload } from 'jsonwebtoken'
 import { catchAsync } from './errorController'
 import User from '../db/userModel'
 import AppError from '../utils/AppError'
-import { successResponse } from '../utils/responseFactory'
+import { successResponse } from '../services/responseFactory'
 import { AuthenticatedReq, Role } from '../types'
+import { findUserById, findUserWithPassword } from '../services/userServices'
 
 const generateJWT = (id: string) => {
   const secret = process.env.JWT_SECRET
@@ -20,7 +21,7 @@ export const login = catchAsync(async (req: Request, res: Response, next: NextFu
   if (!email || !password)
     return next(new AppError(400, 'Please provide email and password'))
 
-  const user = await User.findOne({ email }).select('+password')
+  const user = await findUserWithPassword({ email })
 
   if (!user || !(await user.comparePasswords(password)))
     return next(new AppError(401, 'Incorrect email or password'))
@@ -61,8 +62,7 @@ export const protect = catchAsync(async (req: AuthenticatedReq, res: Response, n
   const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload
   if (!decoded) return next(new AppError(401, 'Invalid token. Please log in again.'))
 
-  const user = await User.findById(decoded.id)
-    .select('+passwordLastChangedAt')
+  const user = await findUserById(decoded.id, '+passwordLastChangedAt')
 
   if (!user)
     return next(new AppError(401, 'The user belonging to this token does no longer exist.'))

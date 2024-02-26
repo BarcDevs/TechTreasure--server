@@ -1,6 +1,6 @@
 import express from 'express'
 import {
-  createItem,
+  addItem,
   deleteItem,
   getItem,
   getItems,
@@ -20,7 +20,7 @@ router.get('/category/:category', getItemsByCategory)
 
 /* protected routes */
 router.use('/*', protect, restrict(['seller']))
-router.post('/', uploadImage.any(), saveImages, createItem)
+router.post('/', uploadImage.any(), saveImages, addItem)
 router.patch('/:id', updateItem)
 router.delete('/:id', deleteItem)
 

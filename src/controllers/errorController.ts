@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, ErrorRequestHandler } from 'express'
 import AppError from '../utils/AppError'
-import { errorResponse } from '../utils/responseFactory'
+import { errorResponse } from '../services/responseFactory'
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const catchAsync = (fn: Function) => async (req: Request, res: Response, next: NextFunction) => {

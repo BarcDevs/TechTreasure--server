@@ -11,7 +11,7 @@ export const parseFormData = (data: object) => {
   return obj
 }
 
-export const parse = (value: string) => {
+export const parse = (value: string | undefined) => {
   if (!value) return
   return value === 'undefined' ? undefined : JSON.parse(value)
 }
