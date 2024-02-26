@@ -17,13 +17,13 @@ const generateJWT = (id: string) => {
 
 export const login = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body
-  if (!email || !password) return next(new AppError(400, 'Please provide email and password'))
+  if (!email || !password)
+    return next(new AppError(400, 'Please provide email and password'))
 
   const user = await User.findOne({ email }).select('+password')
 
-  if (!user || !(await user.comparePasswords(password))) {
+  if (!user || !(await user.comparePasswords(password)))
     return next(new AppError(401, 'Incorrect email or password'))
-  }
   const token = generateJWT(`${user._id}`)
   user.password = ''
   successResponse(res, { user }, 200, { token })
@@ -50,13 +50,10 @@ export const signup = catchAsync(async (req: Request, res: Response, next: NextF
 })
 
 export const protect = catchAsync(async (req: AuthenticatedReq, res: Response, next: NextFunction) => {
-  let token
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    token = req.headers.authorization.split(' ')[1]
-  }
+  if (!req.headers.authorization?.startsWith('Bearer'))
+    return next(new AppError(401, 'You are not logged in! Please log in to get access.'))
+
+  const token = req.headers.authorization.split(' ')[1]
 
   if (!token)
     return next(new AppError(401, 'You are not logged in! Please log in to get access.'))
@@ -67,10 +64,11 @@ export const protect = catchAsync(async (req: AuthenticatedReq, res: Response, n
   const user = await User.findById(decoded.id)
     .select('+passwordLastChangedAt')
 
-  if (!user) return next(new AppError(401, 'The user belonging to this token does no longer exist.'))
-  if (!user.passwordLastChangedAt || Number(user.passwordLastChangedAt) > (decoded.iat ?? 0) * 1000) {
+  if (!user)
+    return next(new AppError(401, 'The user belonging to this token does no longer exist.'))
+
+  if (!user.passwordLastChangedAt || Number(user.passwordLastChangedAt) > (decoded.iat ?? 0) * 1000)
     return next(new AppError(401, 'User recently changed password. Please log in again.'))
-  }
 
   req.user = user
   next()
