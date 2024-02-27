@@ -11,11 +11,13 @@ import config from 'config'
 
 const app = express()
 /* cors */
-app.use(cors({
-  origin: config.get('clientUrl'),
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'X-Auth-Token', 'X-Request-With']
-}))
+app.use(
+  cors({
+    origin: config.get('origin'),
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'X-Auth-Token', 'X-Request-With']
+  })
+)
 
 app.use(logger('dev'))
 app.use(express.json())
