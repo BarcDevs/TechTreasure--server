@@ -2,6 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import path from 'path'
 import cookieParser from 'cookie-parser'
+// @ts-ignore
+import {xss} from 'express-xss-sanitizer'
 import logger from 'morgan'
 import 'dotenv/config'
 
@@ -10,6 +12,7 @@ import { errorHandler, notFound } from './controllers/errorController'
 import config from 'config'
 
 const app = express()
+app.use(xss())
 /* cors */
 app.use(
   cors({
