@@ -30,6 +30,9 @@ const sendCredentials = (res: Response, token: string) => {
   })
 }
 
+/**
+ * Handles the entire process of a user login.
+ */
 export const login = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body
   if (!email || !password)
@@ -46,6 +49,9 @@ export const login = catchAsync(async (req: Request, res: Response, next: NextFu
   successResponse(res, { user }, 200)
 })
 
+/**
+ * Handles the entire process of a user signup.
+ */
 export const signup = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const { name, email, password } = req.body
   if (!name || !email || !password)
@@ -67,6 +73,12 @@ export const signup = catchAsync(async (req: Request, res: Response, next: NextF
   successResponse(res, { user }, 201)
 })
 
+/**
+ * A middleware that protects routes from unauthorized users.
+ * - The middleware checks if the user is logged in or not.
+ * - If the user is not logged in, it returns an error back to the client.
+ * - If the user is logged in, it saves the user object in the request object as req.user, in order to be used in next middlewares.
+ */
 export const protect = catchAsync(async (req: AuthenticatedReq, res: Response, next: NextFunction) => {
   // if (!req.headers.authorization?.startsWith('Bearer'))
   //   return next(new AppError(401, 'You are not logged in! Please log in to get access.'))
@@ -95,6 +107,14 @@ export const protect = catchAsync(async (req: AuthenticatedReq, res: Response, n
   next()
 })
 
+/**
+ * Middleware to restrict access based on user roles.
+ *
+ * @param {Role[]} roles - array of roles allowed to access
+ *
+ * - Must be placed after a protect middleware, so it will be able to access the saved user in req.user
+ * - If the user role is not in the array, it returns an error back to the client.
+ */
 export const restrict = (roles: Role[]) => (req: AuthenticatedReq, res: Response, next: NextFunction) => {
   if (!req.user)
     return next(new AppError(401, 'You are not logged in! Please log in to get access.'))

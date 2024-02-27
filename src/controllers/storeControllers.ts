@@ -1,4 +1,3 @@
-import Item from '../db/itemModel'
 import { NextFunction, Request, Response } from 'express'
 import { catchAsync } from './errorController'
 import { successResponse } from '../services/responseFactory'
@@ -14,11 +13,21 @@ import {
   updateItemById
 } from '../services/itemService'
 
+/**
+ * Use GET /api/items to get all items
+ * add query params to get specific query items
+ * query params:
+ * @page number representing the page number
+ * @limit number representing the number of items per page
+ * @sort string representing the sort field (add - for descending order. e.g. -createdAt)
+ * @fields string representing the fields to return, must be separated by comma
+ * @filter stringified JSON representing the filter query. e.g. {"category":"electronics"}
+ * @body: a find query
+ */
 export const getItems = catchAsync(async (req: Request<any, any, UrlQuery>, res: Response, next: NextFunction) => {
   const items = await getItemsByQuery(req.query as UrlQuery, req.body)
 
   if (!items) return next(new AppError(404, 'Items not found'))
-
   return successResponse(res, items)
 })
 
