@@ -7,6 +7,7 @@ import { successResponse } from '../services/responseFactory'
 import { AuthenticatedReq, Role } from '../types'
 import { findUserById, findUserWithPassword } from '../services/userServices'
 import vars from '../config/vars'
+import { matchedData } from 'express-validator'
 
 const generateJWT = (id: string) => {
   if (!vars.jwtSecret) throw new AppError(400, 'JWT secret is not defined')
@@ -53,7 +54,7 @@ export const login = catchAsync(async (req: Request, res: Response, next: NextFu
  * Handles the entire process of a user signup.
  */
 export const signup = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const { name, email, password } = req.body
+  const { name, email, password } = matchedData(req)
   if (!name || !email || !password)
     return next(new AppError(400, 'Please provide name, email and password'))
 
