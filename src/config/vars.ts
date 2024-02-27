@@ -1,8 +1,8 @@
 export default {
   env: process.env.NODE_ENV || 'development',
 
-  jwtSecret: process.env.JWT_SECRET || 'secret',
-  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
+  jwtSecret: process.env.JWT_SECRET,
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
   bcryptSaltRounds: process.env.BCRYPT_SALT_ROUNDS || '10',
   jwtCookieExpiresIn: process.env.JWT_COOKIE_EXPIRES_IN || '90',
 

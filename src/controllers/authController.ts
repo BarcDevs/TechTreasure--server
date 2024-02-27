@@ -16,6 +16,20 @@ const generateJWT = (id: string) => {
   })
 }
 
+const sendCredentials = (res: Response, token: string) => {
+  res.cookie('jwt', token, {
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: true,
+    expires: new Date(Date.now() + Number(vars.jwtCookieExpiresIn) * 24 * 60 * 60 * 1000)
+  })
+  res.cookie('XSRF-TOKEN', token, {
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: true
+  })
+}
+
 export const login = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const { email, password } = req.body
   if (!email || !password)
@@ -27,7 +41,9 @@ export const login = catchAsync(async (req: Request, res: Response, next: NextFu
     return next(new AppError(401, 'Incorrect email or password'))
   const token = generateJWT(`${user._id}`)
   user.password = ''
-  successResponse(res, { user }, 200, { token })
+
+  sendCredentials(res, token)
+  successResponse(res, { user }, 200)
 })
 
 export const signup = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -47,17 +63,22 @@ export const signup = catchAsync(async (req: Request, res: Response, next: NextF
 
   // todo send welcome email
   user.password = ''
-  successResponse(res, { user }, 201, { token })
+  sendCredentials(res, token)
+  successResponse(res, { user }, 201)
 })
 
 export const protect = catchAsync(async (req: AuthenticatedReq, res: Response, next: NextFunction) => {
-  if (!req.headers.authorization?.startsWith('Bearer'))
-    return next(new AppError(401, 'You are not logged in! Please log in to get access.'))
+  // if (!req.headers.authorization?.startsWith('Bearer'))
+  //   return next(new AppError(401, 'You are not logged in! Please log in to get access.'))
+  //
+  // const token = req.headers.authorization.split(' ')[1]
 
-  const token = req.headers.authorization.split(' ')[1]
+  const token = req.cookies.jwt
 
   if (!token)
     return next(new AppError(401, 'You are not logged in! Please log in to get access.'))
+
+  if (!vars.jwtSecret) throw new AppError(400, 'JWT secret is not defined')
 
   const decoded = jwt.verify(token, vars.jwtSecret) as JwtPayload
   if (!decoded) return next(new AppError(401, 'Invalid token. Please log in again.'))
