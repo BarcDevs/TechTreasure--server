@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { validationResult } from 'express-validator'
+import { Result, ValidationError, validationResult } from 'express-validator'
 
 /**
  * Middleware to validate input data coming from user.
@@ -10,8 +10,15 @@ import { validationResult } from 'express-validator'
  */
 export const validate = (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() })
-  }
+  if (!errors.isEmpty())
+    return returnValidationErrors(res, errors)
   next()
 }
+
+export const returnValidationErrors = (res: Response, errors: Result<ValidationError>) =>
+  res.status(400)
+    .json({
+      status: 'failed',
+      errors: errors.array(),
+      message: 'A validation error occurred while processing your request. Please check your input and try again.'
+    })
