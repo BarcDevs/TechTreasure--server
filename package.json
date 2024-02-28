@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "set NODE_CONFIG_DIR=./src/config&& npx tsc",
-    "start": "set NODE_CONFIG_DIR=./src/config&& node dist/server.js",
+    "start": "set NODE_CONFIG_DIR=./dist/config&& node dist/server.js",
     "dev": "set NODE_CONFIG_DIR=./src/config&& nodemon --quiet --exec ts-node src/server.ts"
   },
   "dependencies": {
