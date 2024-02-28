@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "npx tsc",
     "start": "node dist/server.js",
     "dev": "nodemon --quiet --exec ts-node src/server.ts"
   },
