@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node dist/server.js",
-    "dev": "nodemon --quiet --exec ts-node src/server.ts"
+    "build": "set NODE_CONFIG_DIR=./src/config&& npx tsc",
+    "start": "set NODE_CONFIG_DIR=./src/config&& node dist/server.js",
+    "dev": "set NODE_CONFIG_DIR=./src/config&& nodemon --quiet --exec ts-node src/server.ts"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
