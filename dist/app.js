@@ -7,14 +7,18 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const path_1 = __importDefault(require("path"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+// @ts-ignore
+const express_xss_sanitizer_1 = require("express-xss-sanitizer");
 const morgan_1 = __importDefault(require("morgan"));
 require("dotenv/config");
 const routes_1 = require("./routes");
 const errorController_1 = require("./controllers/errorController");
+const config_1 = __importDefault(require("config"));
 const app = (0, express_1.default)();
+app.use((0, express_xss_sanitizer_1.xss)());
 /* cors */
 app.use((0, cors_1.default)({
-    origin: process.env.CLIENT_URL,
+    origin: config_1.default.get('origin'),
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'X-Auth-Token', 'X-Request-With']
 }));

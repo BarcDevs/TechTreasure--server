@@ -5,14 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.errorHandler = exports.notFound = exports.catchAsync = void 0;
 const AppError_1 = __importDefault(require("../utils/AppError"));
-const responseFactory_1 = require("../utils/responseFactory");
+const responseFactory_1 = require("../services/responseFactory");
+const vars_1 = __importDefault(require("../config/vars"));
 // eslint-disable-next-line @typescript-eslint/ban-types
 const catchAsync = (fn) => async (req, res, next) => {
     try {
         return await fn(req, res, next);
     }
     catch (error) {
-        if (process.env.NODE_ENV !== 'production') {
+        if (vars_1.default.env !== 'production') {
             console.log(error.stack);
         }
         next(new AppError_1.default(400, error.message));

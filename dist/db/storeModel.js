@@ -15,5 +15,15 @@ storeModel.virtual('products', {
     localField: '_id',
     foreignField: 'store'
 });
+storeModel.virtual('orders', {
+    ref: 'Order',
+    localField: '_id',
+    foreignField: 'store'
+});
+storeModel.virtual('owner', {
+    ref: 'User',
+    localField: '_id',
+    foreignField: 'store'
+});
 const Store = (0, mongoose_1.model)('Store', storeModel);
 exports.default = Store;

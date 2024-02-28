@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const vars_1 = __importDefault(require("../config/vars"));
 const userModel = new mongoose_1.Schema({
     name: {
         type: String,
@@ -64,7 +65,7 @@ userModel.virtual('orders', {
 userModel.pre('save', async function (next) {
     if (!this.isModified('password'))
         return next();
-    const salt = await bcrypt_1.default.genSalt(Number(process.env.BCRYPT_SALT_ROUNDS) || 10);
+    const salt = await bcrypt_1.default.genSalt(Number(vars_1.default.bcryptSaltRounds) || 10);
     this.password = await bcrypt_1.default.hash(this.password, salt);
     this.passwordLastChangedAt = Date.now();
     next();
