@@ -1,6 +1,6 @@
 import { connect } from 'mongoose'
 import dotenv from 'dotenv'
-import vars from '../config/vars'
+import vars from '../../config/vars'
 dotenv.config()
 
 const db = connect(vars.mongoUri!, {

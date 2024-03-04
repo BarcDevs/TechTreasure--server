@@ -1,7 +1,7 @@
 import { Role, Seller, User } from '../types'
 import { model, Schema } from 'mongoose'
 import bcrypt from 'bcrypt'
-import vars from '../config/vars'
+import vars from '../../config/vars'
 
 interface IUser extends Omit<User, 'role'> {
   role: Role

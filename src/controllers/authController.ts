@@ -6,7 +6,7 @@ import AppError from '../utils/AppError'
 import { successResponse } from '../services/responseFactory'
 import { AuthenticatedReq, Role } from '../types'
 import { findUserById, findUserWithPassword } from '../services/userServices'
-import vars from '../config/vars'
+import vars from '../../config/vars'
 import { matchedData } from 'express-validator'
 
 const generateJWT = (id: string) => {
