@@ -7,6 +7,7 @@ interface NodeConfig {
   host: string
   origin: string
   url: string
+  publicSrc: string
 }
 
 const nodeConfig: NodeConfig = {
@@ -15,7 +16,8 @@ const nodeConfig: NodeConfig = {
   protocol: config.get<string>('protocol'),
   host: config.get<string>('host'),
   origin: config.get<string>('origin'),
-  url: config.get<string>('url')
+  url: config.get<string>('url'),
+  publicSrc: config.get<string>('publicSrc')
 }
 
 export default nodeConfig

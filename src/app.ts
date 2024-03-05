@@ -26,7 +26,7 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, '..', 'public')))
+app.use(express.static(path.join(__dirname, config.publicSrc)))
 
 app.get('/', (req, res) => {
   res.send('This is api for TechTreasure app. check api docs for more details')
