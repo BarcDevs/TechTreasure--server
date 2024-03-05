@@ -73,3 +73,4 @@ itemModel.index({ rating: -1 });
 itemModel.index({ price: -1 });
 const Item = (0, mongoose_1.model)('Item', itemModel);
 exports.default = Item;
+//# sourceMappingURL=itemModel.js.map

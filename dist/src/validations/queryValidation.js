@@ -22,3 +22,4 @@ const queryParamsValidationRules = () => {
     ];
 };
 exports.queryParamsValidationRules = queryParamsValidationRules;
+//# sourceMappingURL=queryValidation.js.map

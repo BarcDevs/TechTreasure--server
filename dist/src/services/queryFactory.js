@@ -50,3 +50,4 @@ const queryFactory = async (model, urlQuery, find, populateOptions) => {
     return query;
 };
 exports.queryFactory = queryFactory;
+//# sourceMappingURL=queryFactory.js.map

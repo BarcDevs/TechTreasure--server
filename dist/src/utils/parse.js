@@ -22,3 +22,4 @@ const parse = (value) => {
     return value === 'undefined' ? undefined : JSON.parse(value);
 };
 exports.parse = parse;
+//# sourceMappingURL=parse.js.map

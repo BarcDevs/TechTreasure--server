@@ -9,3 +9,4 @@ const queryValidation_1 = require("../validations/queryValidation");
 const router = express_1.default.Router();
 router.get('/stores/:id', queryValidation_1.objectIdSanitizer, userController_1.getStore);
 exports.default = router;
+//# sourceMappingURL=userRouter.js.map

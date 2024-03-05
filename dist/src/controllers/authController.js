@@ -112,3 +112,4 @@ const restrict = (roles) => (req, res, next) => {
     next();
 };
 exports.restrict = restrict;
+//# sourceMappingURL=authController.js.map

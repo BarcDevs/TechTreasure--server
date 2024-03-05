@@ -24,3 +24,4 @@ const itemValidationRules = () => [
     (0, express_validator_1.body)('oldPrice').optional().isFloat({ min: 0 }).withMessage('Old price must be a non-negative number')
 ];
 exports.itemValidationRules = itemValidationRules;
+//# sourceMappingURL=itemValidation.js.map

@@ -8,3 +8,4 @@ const userCreateInfoValidationRules = () => [
     (0, express_validator_1.body)('password').notEmpty().withMessage('Password is required')
 ];
 exports.userCreateInfoValidationRules = userCreateInfoValidationRules;
+//# sourceMappingURL=userValidation.js.map

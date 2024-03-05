@@ -10,3 +10,4 @@ var queryFields;
     queryFields["filter"] = "filter";
     queryFields["search"] = "search";
 })(queryFields = exports.queryFields || (exports.queryFields = {}));
+//# sourceMappingURL=index.js.map

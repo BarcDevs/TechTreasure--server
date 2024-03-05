@@ -21,3 +21,4 @@ const updateItemById = async (id, data) => itemModel_1.default.findByIdAndUpdate
 exports.updateItemById = updateItemById;
 const deleteItemById = async (id) => itemModel_1.default.findByIdAndDelete(id);
 exports.deleteItemById = deleteItemById;
+//# sourceMappingURL=itemService.js.map

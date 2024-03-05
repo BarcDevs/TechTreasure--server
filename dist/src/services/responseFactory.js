@@ -19,3 +19,4 @@ const errorResponse = (res, error, statusCode, status) => {
     });
 };
 exports.errorResponse = errorResponse;
+//# sourceMappingURL=responseFactory.js.map

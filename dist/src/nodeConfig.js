@@ -10,6 +10,8 @@ const nodeConfig = {
     protocol: config_1.default.get('protocol'),
     host: config_1.default.get('host'),
     origin: config_1.default.get('origin'),
-    url: config_1.default.get('url')
+    url: config_1.default.get('url'),
+    publicSrc: config_1.default.get('publicSrc')
 };
 exports.default = nodeConfig;
+//# sourceMappingURL=nodeConfig.js.map

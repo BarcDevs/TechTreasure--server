@@ -14,3 +14,4 @@ const getStoreWithProducts = async (id) => storeModel_1.default
     .findById(id)
     .populate('products');
 exports.getStoreWithProducts = getStoreWithProducts;
+//# sourceMappingURL=userServices.js.map

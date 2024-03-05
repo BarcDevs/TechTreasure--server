@@ -20,3 +20,4 @@ const uploadImage = (0, multer_1.default)({
     fileFilter: multerImageFilter
 });
 exports.uploadImage = uploadImage;
+//# sourceMappingURL=upload.js.map

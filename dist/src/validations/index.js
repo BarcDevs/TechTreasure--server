@@ -23,3 +23,4 @@ const returnValidationErrors = (res, errors) => res.status(400)
     message: 'A validation error occurred while processing your request. Please check your input and try again.'
 });
 exports.returnValidationErrors = returnValidationErrors;
+//# sourceMappingURL=index.js.map

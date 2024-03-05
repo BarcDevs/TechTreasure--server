@@ -27,3 +27,4 @@ storeModel.virtual('owner', {
 });
 const Store = (0, mongoose_1.model)('Store', storeModel);
 exports.default = Store;
+//# sourceMappingURL=storeModel.js.map

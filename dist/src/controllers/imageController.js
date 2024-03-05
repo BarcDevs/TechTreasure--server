@@ -46,3 +46,4 @@ const saveImages = async (req, res, next) => {
     next();
 };
 exports.saveImages = saveImages;
+//# sourceMappingURL=imageController.js.map

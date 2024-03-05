@@ -33,3 +33,4 @@ const errorHandler = (err, req, res, next) => {
     (0, responseFactory_1.errorResponse)(res, err, 500, 'error');
 };
 exports.errorHandler = errorHandler;
+//# sourceMappingURL=errorController.js.map

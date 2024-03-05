@@ -55,3 +55,4 @@ exports.deleteItem = (0, errorController_1.catchAsync)(async (req, res, next) =>
         return next(new AppError_1.default(404, 'Item not found'));
     (0, responseFactory_1.successResponse)(res, deletedItem, 204);
 });
+//# sourceMappingURL=storeControllers.js.map

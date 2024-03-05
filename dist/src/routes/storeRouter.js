@@ -21,3 +21,4 @@ router.post('/', (0, itemValidation_1.itemValidationRules)(), validations_1.vali
 router.patch('/:id', queryValidation_1.objectIdSanitizer, (0, itemValidation_1.itemValidationRules)(), validations_1.validate, storeControllers_1.updateItem);
 router.delete('/:id', queryValidation_1.objectIdSanitizer, storeControllers_1.deleteItem);
 exports.default = router;
+//# sourceMappingURL=storeRouter.js.map
