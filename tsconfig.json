@@ -7,10 +7,10 @@
     "lib": ["ES2021.String"],
     "module": "commonjs",
     "moduleResolution": "Node" ,
-    "rootDir": ".",
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "outDir": "./dist",
     "esModuleInterop": true,
+    "sourceMap": true,
     "strict": true
   }
 }
