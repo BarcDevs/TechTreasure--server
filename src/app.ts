@@ -9,14 +9,14 @@ import 'dotenv/config'
 
 import { authRouter, storeRouter, userRouter } from './routes'
 import { errorHandler, notFound } from './controllers/errorController'
-import config from 'config'
+import config from './nodeConfig'
 
 const app = express()
 app.use(xss())
 /* cors */
 app.use(
   cors({
-    origin: config.get('origin'),
+    origin: config.origin,
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'X-Auth-Token', 'X-Request-With']
   })

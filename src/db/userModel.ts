@@ -1,4 +1,4 @@
-import { Role, Seller, User } from '../types'
+import { Role, User } from '../types'
 import { model, Schema } from 'mongoose'
 import bcrypt from 'bcrypt'
 import vars from '../../config/vars'
