@@ -7,7 +7,7 @@ import {xss} from 'express-xss-sanitizer'
 import logger from 'morgan'
 import 'dotenv/config'
 
-import { authRouter, storeRouter, userRouter } from './routes'
+import router from './routes'
 import { errorHandler, notFound } from './controllers/errorController'
 import config from './nodeConfig'
 
@@ -32,11 +32,8 @@ app.get('/', (req, res) => {
   res.send('This is api for TechTreasure app. check api docs for more details')
 })
 
-app.use('/api/products', storeRouter)
-app.use('/api/auth', authRouter)
-app.use('/api/user', userRouter)
-
+app.use('/api', router)
 app.all('*', notFound)
-// not working
+// todo not working
 app.use(errorHandler)
 export default app
