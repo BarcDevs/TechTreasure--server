@@ -12,9 +12,9 @@ const http_1 = __importDefault(require("http"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const debug_1 = __importDefault(require("debug"));
 const db_1 = __importDefault(require("./db"));
-const config_1 = __importDefault(require("config"));
+const nodeConfig_1 = __importDefault(require("./nodeConfig"));
 dotenv_1.default.config();
-const PORT = config_1.default.get('port');
+const PORT = nodeConfig_1.default.port;
 (0, debug_1.default)('ts-express:server');
 /**
  * Get port from environment and store in Express.

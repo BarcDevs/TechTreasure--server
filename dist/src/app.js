@@ -11,14 +11,14 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const express_xss_sanitizer_1 = require("express-xss-sanitizer");
 const morgan_1 = __importDefault(require("morgan"));
 require("dotenv/config");
-const routes_1 = require("./routes");
+const routes_1 = __importDefault(require("./routes"));
 const errorController_1 = require("./controllers/errorController");
-const config_1 = __importDefault(require("config"));
+const nodeConfig_1 = __importDefault(require("./nodeConfig"));
 const app = (0, express_1.default)();
 app.use((0, express_xss_sanitizer_1.xss)());
 /* cors */
 app.use((0, cors_1.default)({
-    origin: config_1.default.get('origin'),
+    origin: nodeConfig_1.default.origin,
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin', 'X-Auth-Token', 'X-Request-With']
 }));
@@ -30,10 +30,8 @@ app.use(express_1.default.static(path_1.default.join(__dirname, '..', 'public'))
 app.get('/', (req, res) => {
     res.send('This is api for TechTreasure app. check api docs for more details');
 });
-app.use('/api/products', routes_1.storeRouter);
-app.use('/api/auth', routes_1.authRouter);
-app.use('/api/user', routes_1.userRouter);
+app.use('/api', routes_1.default);
 app.all('*', errorController_1.notFound);
-// not working
+// todo not working
 app.use(errorController_1.errorHandler);
 exports.default = app;

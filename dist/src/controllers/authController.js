@@ -10,7 +10,7 @@ const userModel_1 = __importDefault(require("../db/userModel"));
 const AppError_1 = __importDefault(require("../utils/AppError"));
 const responseFactory_1 = require("../services/responseFactory");
 const userServices_1 = require("../services/userServices");
-const vars_1 = __importDefault(require("../config/vars"));
+const vars_1 = __importDefault(require("../../config/vars"));
 const express_validator_1 = require("express-validator");
 const generateJWT = (id) => {
     if (!vars_1.default.jwtSecret)

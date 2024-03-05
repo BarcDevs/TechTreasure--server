@@ -6,14 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.errorHandler = exports.notFound = exports.catchAsync = void 0;
 const AppError_1 = __importDefault(require("../utils/AppError"));
 const responseFactory_1 = require("../services/responseFactory");
-const vars_1 = __importDefault(require("../config/vars"));
+const nodeConfig_1 = __importDefault(require("../nodeConfig"));
 // eslint-disable-next-line @typescript-eslint/ban-types
 const catchAsync = (fn) => async (req, res, next) => {
     try {
         return await fn(req, res, next);
     }
     catch (error) {
-        if (vars_1.default.env !== 'production') {
+        if (nodeConfig_1.default.env !== 'production') {
             console.log(error.stack);
         }
         next(new AppError_1.default(400, error.message));
