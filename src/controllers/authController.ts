@@ -12,6 +12,7 @@ import { matchedData } from 'express-validator'
 const generateJWT = (id: string) => {
   if (!vars.jwtSecret) throw new AppError(400, 'JWT secret is not defined')
 
+  // @ts-ignore: TypeScript misinterprets the type here, but it works as intended
   return jwt.sign({ id }, vars.jwtSecret, {
     expiresIn: vars.jwtExpiresIn || '1d'
   })
