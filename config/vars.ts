@@ -11,5 +11,8 @@ export default {
   mongoUsername: process.env.MONGO_USERNAME,
   mongoPassword: process.env.MONGO_PASSWORD,
   mongoUri: process.env.MONGO_URI,
-  mongoDbName: process.env.MONGO_DB_NAME
+  mongoDbName: process.env.MONGO_DB_NAME,
+
+  stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+  stripeSecretKey: process.env.STRIPE_SECRET_KEY as string
 }
