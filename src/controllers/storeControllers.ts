@@ -45,7 +45,7 @@ export const getItemsByCategory = catchAsync(async (req: Request, res: Response,
   successResponse(res, items)
 })
 
-export const addItem = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+export const addItem = catchAsync(async (req: Request, res: Response) => {
   const body = parseFormData(req.body)
 
   const item = await createItem(body)
