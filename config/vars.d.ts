@@ -8,4 +8,7 @@ declare module 'config' {
   export const mongoPassword: string
   export const mongoUri: string
   export const mongoDbName: string
+
+  export const stripePublishableKey: string
+  export const stripeSecretKey: string
 }

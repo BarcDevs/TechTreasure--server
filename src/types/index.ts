@@ -115,5 +115,11 @@ export type Cart = {
   total: number
 }
 
+export type ContactForm = {
+  name: string
+  email: string
+  phone: string
+  message: string
+}
 
 export type BillingDetails = object
