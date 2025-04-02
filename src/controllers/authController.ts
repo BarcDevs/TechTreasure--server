@@ -55,13 +55,13 @@ export const login = catchAsync(async (req: Request, res: Response, next: NextFu
  * Handles the entire process of a user signup.
  */
 export const signup = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-  const { name, email, password } = matchedData(req)
+  const { name, email, password, role } = matchedData(req)
   if (!name || !email || !password)
     return next(new AppError(400, 'Please provide name, email and password'))
 
   let user
   try {
-    user = await User.create({ name, email, password })
+    user = await User.create({ name, email, password, role })
   } catch (e: Error | any) {
     if (e.code === 11000)
       return next(new AppError(400, 'Email already exists. You can use login instead.'))
