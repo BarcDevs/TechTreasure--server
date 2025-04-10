@@ -15,7 +15,7 @@ router.get('/:id', objectIdSanitizer, getItem)
 router.get('/category/:category', getItemsByCategory)
 
 /* protected routes */
-router.use('/*', protect, restrict(['seller']))
+router.use('/*', protect, restrict(['admin']))
 router.post('/', itemValidationRules(), validate, uploadImage.any(), saveImages, addItem)
 router.patch('/:id', objectIdSanitizer, itemValidationRules(), validate, updateItem)
 router.delete('/:id', objectIdSanitizer, deleteItem)
