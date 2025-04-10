@@ -11,7 +11,7 @@ export enum queryFields {
   search = 'search'
 }
 
-export type Role = 'user' | 'seller'
+export type Role = 'user' | 'admin'
 
 export type AuthenticatedReq = Request & { user?: User }
 
@@ -89,12 +89,12 @@ export type BaseUser = {
   resetTokenExpiration?: Date
 }
 
-export type Seller = {
-  role: 'seller'
+export type Admin = {
+  role: 'admin'
   store: ObjectId
 } & BaseUser
 
-export type User = BaseUser | Seller
+export type User = BaseUser | Admin
 
 export type Store = {
   name: string
