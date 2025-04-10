@@ -125,4 +125,4 @@ const AnalyticsSchema = new mongoose.Schema({
   promotionsImpact: [PromotionSchema]
 }, { timestamps: true })
 
-export default mongoose.model('seller.Analytics', AnalyticsSchema, 'seller.analytics')
+export default mongoose.model('admin.Analytics', AnalyticsSchema, 'admin/analytics')

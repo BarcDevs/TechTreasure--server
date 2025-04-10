@@ -66,4 +66,4 @@ CustomerSchema.virtual('orders', {
   foreignField: 'customer'
 })
 
-export default mongoose.model('Customer', CustomerSchema, 'seller/Customer')
+export default mongoose.model('Customer', CustomerSchema, 'admin/Customer')

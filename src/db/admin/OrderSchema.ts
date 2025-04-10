@@ -18,4 +18,4 @@ OrderSchema.virtual('customerDetails', {
   foreignField: '_id'
 })
 
-export default mongoose.model('Order', OrderSchema, 'seller.order')
+export default mongoose.model('Order', OrderSchema, 'admin/order')
