@@ -54,7 +54,7 @@ const userModel = new Schema<IUser>({
   },
   role: {
     type: String,
-    enum: ['user', 'seller'],
+    enum: ['user', 'admin'],
     default: 'user'
   },
   store: {
@@ -82,7 +82,7 @@ userModel.pre('save', async function(next) {
 
 userModel.pre('save', function(next) {
   if (!this.isModified('role')) return next()
-  if (this.role !== 'seller' && this.store)
+  if (this.role !== 'admin' && this.store)
     this.store = undefined
   next()
 })
