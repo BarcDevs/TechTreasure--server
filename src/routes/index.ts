@@ -7,10 +7,11 @@ import contactRouter from './contactRouter'
 
 const router = express.Router()
 
-router.use('/products', storeRouter)
-router.use('/auth', authRouter)
-router.use('/user', userRouter)
-router.use('/payment', paymentRouter)
-router.use('/contact', contactRouter)
+router
+  .use('/products', storeRouter)
+  .use('/auth', authRouter)
+  .use('/user', userRouter)
+  .use('/payment', paymentRouter)
+  .use('/contact', contactRouter)
 
 export default router
