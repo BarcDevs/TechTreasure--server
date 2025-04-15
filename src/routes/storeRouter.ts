@@ -9,16 +9,18 @@ import { objectIdSanitizer, queryParamsValidationRules } from '../validations/qu
 
 const router = express.Router()
 
-router.get('/', queryParamsValidationRules(), validate, getItems)
-router.get('/:id', objectIdSanitizer, getItem)
+router
+  .get('/', queryParamsValidationRules(), validate, getItems)
+  .get('/:id', objectIdSanitizer, getItem)
 
-router.get('/category/:category', getItemsByCategory)
+  .get('/category/:category', getItemsByCategory)
 
 /* protected routes */
-router.use('/*', protect, restrict(['admin']))
-router.post('/', itemValidationRules(), validate, uploadImage.any(), saveImages, addItem)
-router.patch('/:id', objectIdSanitizer, itemValidationRules(), validate, updateItem)
-router.delete('/:id', objectIdSanitizer, deleteItem)
+router
+  .use('/*', protect, restrict(['admin']))
+  .post('/', itemValidationRules(), validate, uploadImage.any(), saveImages, addItem)
+  .patch('/:id', objectIdSanitizer, itemValidationRules(), validate, updateItem)
+  .delete('/:id', objectIdSanitizer, deleteItem)
 
 export default router
 
