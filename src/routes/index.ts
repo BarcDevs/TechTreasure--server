@@ -1,5 +1,5 @@
 import express from 'express'
-import storeRouter from './storeRouter'
+import storeRouter from './itemsRouter'
 import authRouter from './authRouter'
 import userRouter from './userRouter'
 import paymentRouter from './paymentRouter'
