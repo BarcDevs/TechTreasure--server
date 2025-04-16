@@ -1,6 +1,7 @@
 import Customer from '../db/admin/CustomerSchema'
 import Order from '../db/admin/OrderSchema'
 import Analytics from '../db/admin/AnalyticsSchema'
+import Item from '../db/itemModel'
 
 const getCustomersList = async () =>
   Customer.find()
@@ -20,11 +21,26 @@ const getOrderById = async (id: string) =>
 const getAnalyticsData = async () =>
   Analytics.find()
 
+const getStoreStats = async () => {
+  const [products, customers, orders] = await Promise.all([
+    Item.countDocuments(),
+    Customer.countDocuments(),
+    Order.countDocuments()
+  ])
+
+  return {
+    products,
+    customers,
+    orders
+  }
+}
+
 export {
   getCustomersList,
   getCustomerById,
   getAllOrders,
   getCustomerOrders,
   getOrderById,
-  getAnalyticsData
+  getAnalyticsData,
+  getStoreStats
 }

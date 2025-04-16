@@ -6,18 +6,21 @@ import {
   getAnalytics,
   getCustomer,
   getOrdersByCustomer,
-  getOrder
+  getOrder,
+  getStats
 } from '../controllers/adminController'
+import { objectIdSanitizer } from '../validations/queryValidation'
 
 const router = express.Router()
 
 router
   .use('/*', protect, restrict(['admin']))
   .get('/customers', getCustomers)
-  .get('/orders/:id', getCustomer)
+  .get('/orders/:id', objectIdSanitizer, getCustomer)
   .get('/orders', getOrders)
-  .get('/orders/:id', getOrder)
-  .get('/orders/customer/:id', getOrdersByCustomer)
+  .get('/orders/:id', objectIdSanitizer, getOrder)
+  .get('/orders/customer/:id', objectIdSanitizer, getOrdersByCustomer)
   .get('/analytics', getAnalytics)
+  .get('/stats', getStats)
 
 export default router

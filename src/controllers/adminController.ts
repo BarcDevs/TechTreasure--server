@@ -8,7 +8,8 @@ import {
   getCustomerById,
   getCustomerOrders,
   getCustomersList,
-  getOrderById
+  getOrderById,
+  getStoreStats
 } from '../services/adminService'
 
 export const getCustomers =
@@ -57,4 +58,12 @@ export const getAnalytics =
 
   if (!analytics) return next(new AppError(404, 'Analytics data not found'))
   successResponse(res, analytics)
+})
+
+export const getStats =
+  catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const stats = await getStoreStats()
+
+  if (!stats) return next(new AppError(404, 'Stats data not found. check your database connection'))
+  successResponse(res, stats)
 })
