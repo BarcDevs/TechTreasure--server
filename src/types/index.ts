@@ -122,4 +122,9 @@ export type ContactForm = {
   message: string
 }
 
+export type Subscriber = {
+  email: string
+  createdAt: Date
+}
+
 export type BillingDetails = object
