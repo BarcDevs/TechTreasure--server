@@ -7,9 +7,7 @@ export const itemValidationRules = () =>
     body('price')
       .notEmpty().withMessage('Price is required')
       .isFloat({ min: 0 }).withMessage('Price cannot be negative'),
-    body('mainImage').isArray({ min: 1 }).withMessage('Main image is required'),
     body('category').notEmpty().withMessage('Category is required'),
-    body('store').notEmpty().withMessage('Store is required').isMongoId().withMessage('Invalid store ID'),
     body('shippingFee').optional().isNumeric().withMessage('Shipping fee must be a number')
       .isFloat({ min: 0 }).withMessage('Shipping fee cannot be negative'),
     body('rating').optional().isFloat({ min: 0, max: 5 }).withMessage('Rating must be between 0 and 5'),
