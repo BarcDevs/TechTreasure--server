@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const PeriodSchema = new mongoose.Schema({
-  value: Number,
+  value: Array,
   change: Number,
   trend: { type: String, enum: ['up', 'down'] }
 }, { _id: false })
