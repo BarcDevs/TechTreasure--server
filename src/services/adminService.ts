@@ -2,6 +2,7 @@ import Customer from '../db/admin/CustomerSchema'
 import Order from '../db/admin/OrderSchema'
 import Analytics from '../db/admin/AnalyticsSchema'
 import Item from '../db/itemModel'
+import Inquiry from '../db/admin/inquiryModel'
 
 const getCustomersList = async () =>
   Customer.find()
@@ -28,12 +29,16 @@ const getStoreStats = async () => {
     Order.countDocuments()
   ])
 
+
   return {
     products,
     customers,
     orders
   }
 }
+
+const getCustomerInquiries = async () =>
+  Inquiry.find()
 
 export {
   getCustomersList,
@@ -42,5 +47,6 @@ export {
   getCustomerOrders,
   getOrderById,
   getAnalyticsData,
-  getStoreStats
+  getStoreStats,
+  getCustomerInquiries
 }

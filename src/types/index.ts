@@ -128,3 +128,13 @@ export type Subscriber = {
 }
 
 export type BillingDetails = object
+
+export type Inquiry = {
+  customer: ObjectId
+  customerName: string
+  email: string
+  date: Date
+  item: ObjectId
+  message: string
+  status: string
+}

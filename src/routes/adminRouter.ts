@@ -7,7 +7,7 @@ import {
   getCustomer,
   getOrdersByCustomer,
   getOrder,
-  getStats
+  getStats, getInquiries
 } from '../controllers/adminController'
 import { objectIdSanitizer } from '../validations/queryValidation'
 
@@ -22,5 +22,6 @@ router
   .get('/orders/customer/:id', objectIdSanitizer, getOrdersByCustomer)
   .get('/analytics', getAnalytics)
   .get('/stats', getStats)
+  .get('/inquiries', getInquiries)
 
 export default router

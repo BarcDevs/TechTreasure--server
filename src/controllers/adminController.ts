@@ -5,7 +5,7 @@ import { successResponse } from '../services/responseFactory'
 import {
   getAllOrders,
   getAnalyticsData,
-  getCustomerById,
+  getCustomerById, getCustomerInquiries,
   getCustomerOrders,
   getCustomersList,
   getOrderById,
@@ -67,3 +67,11 @@ export const getStats =
   if (!stats) return next(new AppError(404, 'Stats data not found. check your database connection'))
   successResponse(res, stats)
 })
+
+export const getInquiries =
+  catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+  const inquiries = await getCustomerInquiries()
+
+    if (!inquiries) return next(new AppError(404, 'Inquiries not found'))
+    successResponse(res, inquiries)
+  })
