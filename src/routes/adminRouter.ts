@@ -7,9 +7,11 @@ import {
   getCustomer,
   getOrdersByCustomer,
   getOrder,
-  getStats, getInquiries
+  getStats, getInquiries, updateInquiry
 } from '../controllers/adminController'
 import { objectIdSanitizer } from '../validations/queryValidation'
+import { validate } from '../validations'
+import { inquiryValidationRules } from '../validations/inquiryValidationRules'
 
 const router = express.Router()
 
@@ -23,5 +25,6 @@ router
   .get('/analytics', getAnalytics)
   .get('/stats', getStats)
   .get('/inquiries', getInquiries)
+  .post('/inquiries/:id/update', objectIdSanitizer, inquiryValidationRules(), validate, updateInquiry)
 
 export default router

@@ -29,7 +29,6 @@ const getStoreStats = async () => {
     Order.countDocuments()
   ])
 
-
   return {
     products,
     customers,
@@ -39,6 +38,12 @@ const getStoreStats = async () => {
 
 const getCustomerInquiries = async () =>
   Inquiry.find()
+
+export const updateInquiryById = async (id: string, data: any) =>
+  Inquiry.findByIdAndUpdate(id, data, {
+    new: true,
+    runValidators: true
+  })
 
 export {
   getCustomersList,

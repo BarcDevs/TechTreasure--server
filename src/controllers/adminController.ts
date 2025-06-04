@@ -9,8 +9,9 @@ import {
   getCustomerOrders,
   getCustomersList,
   getOrderById,
-  getStoreStats
+  getStoreStats, updateInquiryById
 } from '../services/adminService'
+import { updateItemById } from '../services/itemService'
 
 export const getCustomers =
   catchAsync(async (req: Request, res: Response, next: NextFunction) => {
@@ -74,4 +75,17 @@ export const getInquiries =
 
     if (!inquiries) return next(new AppError(404, 'Inquiries not found'))
     successResponse(res, inquiries)
+  })
+
+export const updateInquiry =
+  catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    const inquiryId = req.params.id
+
+    if (!inquiryId) return next(new AppError(404, 'Inquiry id is missing'))
+
+    const updatedInquiry = await updateInquiryById(req.params.id, req.body)
+
+    if (!updatedInquiry) return next(new AppError(404, 'Item not found'))
+
+    successResponse(res, updatedInquiry)
   })
