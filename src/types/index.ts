@@ -31,6 +31,11 @@ export type BasicProduct = {
   images?: Image[],
   sizes?: string[]
   rating: number
+  ratings: {
+    user: ObjectId
+    rating: number
+    createdAt: Date
+  }[]
   votes: number
   price: number
   sale?: number
