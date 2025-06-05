@@ -83,6 +83,7 @@ export type Order = {
 }
 
 export type BaseUser = {
+  _id: ObjectId
   role: Role
   name: string
   email: string

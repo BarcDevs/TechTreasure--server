@@ -98,6 +98,7 @@ itemModel.pre('findOneAndUpdate', function(next) {
     rating?: number;
     [key: string]: any;
   }
+  console.log(update)
 
   if (!update.ratings) return next()
 

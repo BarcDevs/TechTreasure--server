@@ -106,6 +106,7 @@ export const protect = catchAsync(async (req: AuthenticatedReq, res: Response, n
     return next(new AppError(401, 'User recently changed password. Please log in again.'))
 
   req.user = user
+
   next()
 })
 

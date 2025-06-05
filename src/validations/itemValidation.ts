@@ -31,4 +31,12 @@ export const itemValidationRules = () =>
       .isFloat({ min: 0, max: 5 }).withMessage('Rating must be between 0 and 5'),
     body('ratings.*.createdAt')
       .optional()
-      .isISO8601().toDate().withMessage('CreatedAt must be a valid date')]
+      .isISO8601().toDate().withMessage('CreatedAt must be a valid date')
+  ]
+
+export const ratingValidationRules = () =>
+  [
+    body('rating')
+      .notEmpty().withMessage('Rating is required')
+      .isFloat({ min: 1, max: 5 }).withMessage('Rating must be between 1 and 5')
+  ]
