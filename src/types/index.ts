@@ -72,15 +72,6 @@ export type ManagedProduct = Product & {
   orders: Order[] | string[]
 }
 
-export type Order = {
-  createdAt: Date
-  items: CartItem[]
-  payment: string
-  status: 'pending' | 'processing' | 'shipped' | 'delivered'
-  total: number
-  trackingNumber?: string
-}
-
 export type BaseUser = {
   _id: ObjectId
   role: Role
@@ -135,4 +126,52 @@ export type Inquiry = {
   item: ObjectId
   message: string
   status: string
+}
+
+export type CustomerDetails = {
+  name: string
+  company?: string
+  address: string
+  additional_address?: string
+  city: string
+  country: string
+  postcode: string
+  phone: string
+  email: string
+}
+
+export type Order = {
+  _id?: ObjectId
+  amount: number
+  orderId: string
+  trackingNumber?: string
+  items: CartItem[]
+  customerDetails: CustomerDetails
+  status: 'pending' | 'processing' | 'shipped' | 'delivered'
+  createdAt?: Date
+  updatedAt?: Date
+}
+
+export type CustomerFormValues = {
+  name: string
+  company?: string
+  address: string
+  additional_address?: string
+  city: string
+  country: string
+  postcode: string
+  phone: string
+  email: string
+}
+
+export type OrderPayload = {
+  amount: number
+  orderId: string
+  trackingNumber?: string
+  items: {
+    quantity: number
+    price: number
+    item: string
+  }[]
+  customerDetails: CustomerFormValues
 }

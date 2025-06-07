@@ -1,7 +1,6 @@
+import Order from '../db/OrderModel'
 import Customer from '../db/admin/CustomerSchema'
-import Order from '../db/admin/OrderSchema'
 import Analytics from '../db/admin/AnalyticsSchema'
-import Item from '../db/itemModel'
 import Inquiry from '../db/admin/inquiryModel'
 
 const getCustomersList = async () =>
