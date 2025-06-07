@@ -5,7 +5,6 @@ import { queryFactory } from './queryFactory'
 
 export const getItemsByQuery = async (urlQuery: UrlQuery, find: object, populateOptions?: PopulateOptions) => {
   const pageLimit = Math.max(Number(urlQuery.limit) || 20, 1)
-  const totalPages = Math.ceil(await Item.countDocuments() / pageLimit)
 
   if (urlQuery.category)
     find = { ...find, category: urlQuery.category }
@@ -25,6 +24,9 @@ export const getItemsByQuery = async (urlQuery: UrlQuery, find: object, populate
     Item, urlQuery, find, populateOptions
   )
 
+  const totalMatchingItems = await countItems(find)
+  const totalPages = Math.ceil(totalMatchingItems / pageLimit)
+
   return {
     totalPages,
     products: items
@@ -43,3 +45,5 @@ export const updateItemById = async (id: string, data: any) => Item.findByIdAndU
 })
 
 export const deleteItemById = async (id: string) => Item.findByIdAndDelete(id)
+
+export const countItems = async (query?: object) => Item.countDocuments(query)
