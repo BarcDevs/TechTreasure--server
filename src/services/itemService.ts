@@ -21,9 +21,10 @@ export const getItemsByQuery =
       }
     }
 
-    const items = await queryFactory<typeof Item>(
-      Item, urlQuery, find, populateOptions
-    )
+    const items =
+      await queryFactory<typeof Item>(
+        Item, urlQuery, find, populateOptions
+      )
 
     const totalMatchingItems = await countItems(find)
     const totalPages = Math.ceil(totalMatchingItems / pageLimit)
@@ -34,24 +35,29 @@ export const getItemsByQuery =
     }
   }
 
-export const getItemById = async (id: string) =>
+export const getItemById =
+  async (id: string) =>
+    Item.findById(id)
 
-  Item.findById(id)
+export const getCategoryItems =
+  async (category: string) =>
+    Item.find({ category })
 
-export const getCategoryItems = async (category: string) =>
-  Item.find({ category })
+export const createItem =
+  async (data: any) =>
+    Item.create(data)
 
-export const createItem = async (data: any) =>
-  Item.create(data)
+export const updateItemById =
+  async (id: string, data: any) =>
+    Item.findByIdAndUpdate(id, data, {
+      new: true,
+      runValidators: true
+    })
 
-export const updateItemById = async (id: string, data: any) =>
-  Item.findByIdAndUpdate(id, data, {
-    new: true,
-    runValidators: true
-  })
+export const deleteItemById =
+  async (id: string) =>
+    Item.findByIdAndDelete(id)
 
-export const deleteItemById = async (id: string) =>
-  Item.findByIdAndDelete(id)
-
-export const countItems = async (query?: object) =>
-  Item.countDocuments(query)
+export const countItems =
+  async (query?: object) =>
+    Item.countDocuments(query)
