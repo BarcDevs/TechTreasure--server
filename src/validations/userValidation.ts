@@ -6,6 +6,6 @@ export const userCreateInfoValidationRules = () =>
     body('email').isEmail().withMessage('Invalid email format'),
     body('password').notEmpty().withMessage('Password is required'),
     body('role').custom(
-      (role) => role === 'user' || role === 'seller'
+      (role) => role === 'user' || role === 'admin'
     ).withMessage('Invalid role')
   ]

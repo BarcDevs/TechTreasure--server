@@ -52,8 +52,25 @@ const itemModel = new Schema<IProduct>({
   shippingFee: Number,
   rating: {
     type: Number,
-    default: 4
+    default: 0
   },
+  ratings: [{
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    rating: {
+      type: Number,
+      validate: {
+        validator: (v: number) => v >= 1 && v <= 5,
+        message: 'Rating must be between 1 and 5'
+      }
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
+    }
+  }],
   votes: {
     type: Number,
     default: 0
@@ -65,12 +82,7 @@ const itemModel = new Schema<IProduct>({
   colors: [colorModel],
   sale: Number,
   saleEndsAt: Date,
-  oldPrice: Number,
-  store: {
-    type: Schema.Types.ObjectId,
-    ref: 'Store',
-    required: [true, 'Store is required']
-  }
+  oldPrice: Number
 }, {
   suppressReservedKeysWarning: true
 })
@@ -79,6 +91,48 @@ itemModel.index({ name: 'text' })
 itemModel.index({ category: 'text' })
 itemModel.index({ rating: -1 })
 itemModel.index({ price: -1 })
+
+itemModel.pre('findOneAndUpdate', function(next) {
+  const update = this.getUpdate() as {
+    ratings?: { user: string; rating: number; createdAt: Date }[];
+    rating?: number;
+    [key: string]: any;
+  }
+  console.log(update)
+
+  if (!update.ratings) return next()
+
+  const latestRatingsMap = new Map()
+
+  update.ratings.forEach(r => {
+    const userId = r.user.toString()
+    if (
+      !latestRatingsMap.has(userId) ||
+      latestRatingsMap.get(userId).createdAt < r.createdAt
+    ) {
+      latestRatingsMap.set(userId, r)
+    }
+  })
+
+  const deduplicatedRatings = Array.from(latestRatingsMap.values())
+
+  // Compute new average
+  const newRating =
+    deduplicatedRatings.length === 0
+      ? 0
+      : parseFloat(
+        (
+          deduplicatedRatings.reduce((acc, r) => acc + r.rating, 0) /
+          deduplicatedRatings.length
+        ).toFixed(1)
+      )
+
+  update.ratings = deduplicatedRatings
+  update.rating = newRating
+
+  this.setUpdate(update)
+  next()
+})
 
 const Item = model<IProduct>('Item', itemModel)
 export default Item

@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import OrderSchema from './OrderSchema'
 import { ObjectId } from 'mongodb'
 
 const NoteSchema = new mongoose.Schema({
@@ -66,4 +65,4 @@ CustomerSchema.virtual('orders', {
   foreignField: 'customer'
 })
 
-export default mongoose.model('Customer', CustomerSchema, 'seller/Customer')
+export default mongoose.model('Customer', CustomerSchema, 'admin/Customer')

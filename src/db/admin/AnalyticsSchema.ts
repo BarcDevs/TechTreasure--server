@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const PeriodSchema = new mongoose.Schema({
-  value: Number,
+  value: Array,
   change: Number,
   trend: { type: String, enum: ['up', 'down'] }
 }, { _id: false })
@@ -125,4 +125,4 @@ const AnalyticsSchema = new mongoose.Schema({
   promotionsImpact: [PromotionSchema]
 }, { timestamps: true })
 
-export default mongoose.model('seller.Analytics', AnalyticsSchema, 'seller.analytics')
+export default mongoose.model('admin.Analytics', AnalyticsSchema, 'admin/analytics')

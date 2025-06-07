@@ -1,21 +1,20 @@
 import mongoose from 'mongoose'
 import { ObjectId } from 'mongodb'
 
-const OrderSchema = new mongoose.Schema({
+const InquirySchema = new mongoose.Schema({
   customer: { type: ObjectId, ref: 'Customer' },
   customerName: String,
   email: String,
   date: Date,
-  total: Number,
-  items: Number,
-  payment: String,
+  item: { type: ObjectId, ref: 'Item' },
+  message: String,
   status: String
 })
 
-OrderSchema.virtual('customerDetails', {
+InquirySchema.virtual('customerDetails', {
   ref: 'Customer',
   localField: 'customer',
   foreignField: '_id'
 })
 
-export default mongoose.model('Order', OrderSchema, 'seller.order')
+export default mongoose.model('Inquiry', InquirySchema, 'admin/inquiry')

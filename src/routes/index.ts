@@ -1,16 +1,20 @@
 import express from 'express'
-import storeRouter from './storeRouter'
+import storeRouter from './itemsRouter'
 import authRouter from './authRouter'
-import userRouter from './userRouter'
 import paymentRouter from './paymentRouter'
 import contactRouter from './contactRouter'
+import adminRouter from './adminRouter'
+import ordersRouter from './ordersRouter'
 
 const router = express.Router()
 
-router.use('/products', storeRouter)
-router.use('/auth', authRouter)
-router.use('/user', userRouter)
-router.use('/payment', paymentRouter)
-router.use('/contact', contactRouter)
+router
+  .use('/products', storeRouter)
+  .use('/auth', authRouter)
+  .use('/payment', paymentRouter)
+  .use('/contact', contactRouter)
+  .use('/orders', ordersRouter)
+
+  .use('/admin', adminRouter)
 
 export default router

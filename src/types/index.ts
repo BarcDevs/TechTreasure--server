@@ -11,7 +11,7 @@ export enum queryFields {
   search = 'search'
 }
 
-export type Role = 'user' | 'seller'
+export type Role = 'user' | 'admin'
 
 export type AuthenticatedReq = Request & { user?: User }
 
@@ -31,6 +31,11 @@ export type BasicProduct = {
   images?: Image[],
   sizes?: string[]
   rating: number
+  ratings: {
+    user: ObjectId
+    rating: number
+    createdAt: Date
+  }[]
   votes: number
   price: number
   sale?: number
@@ -40,7 +45,6 @@ export type BasicProduct = {
   category: string
   shippingFee?: number
   stock: number
-  store: ObjectId
 }
 
 export type ProductWithColors = Omit<BasicProduct, 'mainImage'> & {
@@ -68,16 +72,8 @@ export type ManagedProduct = Product & {
   orders: Order[] | string[]
 }
 
-export type Order = {
-  createdAt: Date
-  items: CartItem[]
-  payment: string
-  status: 'pending' | 'processing' | 'shipped' | 'delivered'
-  total: number
-  trackingNumber?: string
-}
-
 export type BaseUser = {
+  _id: ObjectId
   role: Role
   name: string
   email: string
@@ -89,18 +85,11 @@ export type BaseUser = {
   resetTokenExpiration?: Date
 }
 
-export type Seller = {
-  role: 'seller'
-  store: ObjectId
+export type Admin = {
+  role: 'admin'
 } & BaseUser
 
-export type User = BaseUser | Seller
-
-export type Store = {
-  name: string
-  products: Product[] | string[]
-  // todo ratings
-}
+export type User = BaseUser | Admin
 
 export type Cart = {
   items: CartItem[]
@@ -122,4 +111,43 @@ export type ContactForm = {
   message: string
 }
 
+export type Subscriber = {
+  email: string
+  createdAt: Date
+}
+
 export type BillingDetails = object
+
+export type Inquiry = {
+  customer: ObjectId
+  customerName: string
+  email: string
+  date: Date
+  item: ObjectId
+  message: string
+  status: string
+}
+
+export type CustomerDetails = {
+  name: string
+  company?: string
+  address: string
+  additional_address?: string
+  city: string
+  country: string
+  postcode: string
+  phone: string
+  email: string
+}
+
+export type Order = {
+  _id?: ObjectId
+  amount: number
+  orderId: string
+  trackingNumber?: string
+  items: CartItem[]
+  customerDetails: CustomerDetails
+  status: 'pending' | 'processing' | 'shipped' | 'delivered'
+  createdAt?: Date
+  updatedAt?: Date
+}
