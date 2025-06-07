@@ -1,4 +1,4 @@
-import Order from '../db/OrderModel'
+import Order from '../db/orderModel'
 import { Order as OrderType } from '../types'
 
 export const createOrder =

@@ -1,4 +1,4 @@
-import Order from '../db/OrderModel'
+import Order from '../db/orderModel'
 import Customer from '../db/admin/CustomerSchema'
 import Analytics from '../db/admin/AnalyticsSchema'
 import Inquiry from '../db/admin/inquiryModel'
