@@ -151,27 +151,3 @@ export type Order = {
   createdAt?: Date
   updatedAt?: Date
 }
-
-export type CustomerFormValues = {
-  name: string
-  company?: string
-  address: string
-  additional_address?: string
-  city: string
-  country: string
-  postcode: string
-  phone: string
-  email: string
-}
-
-export type OrderPayload = {
-  amount: number
-  orderId: string
-  trackingNumber?: string
-  items: {
-    quantity: number
-    price: number
-    item: string
-  }[]
-  customerDetails: CustomerFormValues
-}
