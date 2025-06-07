@@ -5,6 +5,10 @@ export const validateOrder = () => ([
     .isNumeric().withMessage('Amount must be a number')
     .notEmpty().withMessage('Amount is required'),
 
+  body('orderId')
+    .isString().withMessage('Order ID must be a string')
+    .notEmpty().withMessage('Order ID is required'),
+
   // Items array
   body('items')
     .isArray({ min: 1 }).withMessage('At least one item is required'),
@@ -15,7 +19,7 @@ export const validateOrder = () => ([
   body('items.*.price')
     .isNumeric().withMessage('Price must be a number'),
 
-  body('items.*.item')
+  body('items.*._id')
     .isMongoId().withMessage('Item must be a valid Mongo ID'),
 
   // Customer details

@@ -11,7 +11,7 @@ const ItemSchema = new Schema(
       type: Number,
       required: true
     },
-    item: {
+    _id: {
       type: Types.ObjectId,
       ref: 'Product',
       required: true
