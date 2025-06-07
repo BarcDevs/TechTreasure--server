@@ -9,7 +9,6 @@ interface IUser extends Omit<User, 'role'> {
   passwordLastChangedAt?: Date
   resetToken?: string
   resetTokenExpiration?: Date
-  store?: Schema.Types.ObjectId
 
   comparePasswords(password: string): Promise<boolean>
 }
@@ -56,10 +55,6 @@ const userModel = new Schema<IUser>({
     type: String,
     enum: ['user', 'admin'],
     default: 'user'
-  },
-  store: {
-    type: Schema.Types.ObjectId,
-    ref: 'Store'
   }
 }, {
   toObject: { virtuals: true },
@@ -77,13 +72,6 @@ userModel.pre('save', async function(next) {
   const salt = await bcrypt.genSalt(Number(vars.bcryptSaltRounds) || 10)
   this.password = await bcrypt.hash(this.password, salt)
   this.passwordLastChangedAt = Date.now() as unknown as Date
-  next()
-})
-
-userModel.pre('save', function(next) {
-  if (!this.isModified('role')) return next()
-  if (this.role !== 'admin' && this.store)
-    this.store = undefined
   next()
 })
 

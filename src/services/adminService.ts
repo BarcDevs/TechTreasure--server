@@ -22,20 +22,6 @@ const getOrderById = async (id: string) =>
 const getAnalyticsData = async () =>
   Analytics.find()
 
-const getStoreStats = async () => {
-  const [products, customers, orders] = await Promise.all([
-    Item.countDocuments(),
-    Customer.countDocuments(),
-    Order.countDocuments()
-  ])
-
-  return {
-    products,
-    customers,
-    orders
-  }
-}
-
 const getCustomerInquiries = async () =>
   Inquiry.find()
 
@@ -52,6 +38,5 @@ export {
   getCustomerOrders,
   getOrderById,
   getAnalyticsData,
-  getStoreStats,
   getCustomerInquiries
 }

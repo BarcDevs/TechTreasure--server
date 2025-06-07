@@ -45,7 +45,6 @@ export type BasicProduct = {
   category: string
   shippingFee?: number
   stock: number
-  store: ObjectId
 }
 
 export type ProductWithColors = Omit<BasicProduct, 'mainImage'> & {
@@ -97,16 +96,9 @@ export type BaseUser = {
 
 export type Admin = {
   role: 'admin'
-  store: ObjectId
 } & BaseUser
 
 export type User = BaseUser | Admin
-
-export type Store = {
-  name: string
-  products: Product[] | string[]
-  // todo ratings
-}
 
 export type Cart = {
   items: CartItem[]
